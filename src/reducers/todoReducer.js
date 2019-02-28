@@ -1,3 +1,5 @@
+import update from 'immutability-helper';
+
 const initialState = {
   todoItems: [
     {id: 1, name: 'Item cat 1', completed: false},
@@ -16,10 +18,11 @@ function todoReducer(state = initialState, action) {
         }
       });
 
-      return {
-        ...state,
-        ...{todoItems: newList}
-      };
+      return update(state, {
+        $merge: {
+          todoItems: newList,
+        }
+      });
     case 'FILTER_CHANGED':
       let itemsList = [];
       if (!action.payload) {
@@ -32,10 +35,11 @@ function todoReducer(state = initialState, action) {
         });
       }
 
-      return {
-        ...state,
-        ...{todoItems: itemsList}
-      };
+      return update(state, {
+        $merge: {
+          todoItems: itemsList,
+        }
+      });
     default:
       return state
   }

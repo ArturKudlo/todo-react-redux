@@ -1,3 +1,5 @@
+import update from 'immutability-helper';
+
 const initialState = {
   filterValue: '',
 };
@@ -5,10 +7,11 @@ const initialState = {
 function filterReducer(state = initialState, action) {
   switch (action.type) {
     case 'FILTER_CHANGED':
-      return {
-        ...state,
-        ...{filterValue: action.payload}
-      };
+      return update(state, {
+        $merge: {
+          filterValue: action.payload,
+        }
+      });
     default:
       return state
   }
