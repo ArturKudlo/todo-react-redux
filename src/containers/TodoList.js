@@ -11,7 +11,10 @@ const mapDispatchToProps = dispatch => {
     onItemComplete : (id) => dispatch({
       type : 'ON_ITEM_COMPLETE',
       payload: id,
-    })
+    }),
+    fetchTodos: () => dispatch({
+      type: 'FETCH_TODOS',
+    }),
   }
 };
 

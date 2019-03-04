@@ -1,11 +1,9 @@
 import update from 'immutability-helper';
 
 const initialState = {
-  todoItems: [
-    {id: 1, name: 'Item cat 1', completed: false},
-    {id: 2, name: 'Item dog 2', completed: true},
-    {id: 3, name: 'Item cat dog map 3', completed: false},
-  ]
+  todoItems: [],
+  newNameValue: '',
+  newCompleteValue: false,
 };
 
 function todoReducer(state = initialState, action) {
@@ -21,6 +19,35 @@ function todoReducer(state = initialState, action) {
       return update(state, {
         $merge: {
           todoItems: newList,
+        }
+      });
+    case 'FETCH_COMPLETED':
+      return update(state, {
+        $merge: {
+          todoItems: action.payload.items,
+        }
+      });
+    case 'ON_NEW_NAME_CHANGE':
+      return update(state, {
+        $merge: {
+          newNameValue: action.payload,
+        }
+      });
+    case 'ON_NEW_COMPLETE_CHANGE':
+      return update(state, {
+        $merge: {
+          newCompleteValue: action.payload,
+        }
+      });
+    case 'CREATE_COMPLETED':
+      let afterCreateList = state.todoItems.slice();
+      afterCreateList.push(action.payload);
+
+      return update(state, {
+        $merge: {
+          todoItems: afterCreateList,
+          newNameValue: initialState.newNameValue,
+          newCompleteValue: initialState.newCompleteValue,
         }
       });
     case 'FILTER_CHANGED':
